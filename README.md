@@ -25,6 +25,7 @@ npx serve .         # 或 python -m http.server 8000
 ```
 stack-tower/
 ├── index.html            # 入口页（含 CrazySDK script 标签）
+├── favicon.svg / favicon-16/32.png / apple-touch-icon.png / icon-192/512.png  # 站点图标（堆叠方块）
 ├── src/
 │   ├── main.ts           # 装配：画布/引擎/渲染/输入/广告 + 主循环
 │   ├── game/
