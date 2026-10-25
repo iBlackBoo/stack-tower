@@ -2,8 +2,6 @@
 
 平台发行方向的第一个游戏。原生 TypeScript + Canvas 2D，零游戏引擎依赖。
 
-> 起名说明：StackNova = stack（品类识别）+ Nova（新星，越堆越高）。避开 Stack / Stack Tower / Tower Stack 等大量同名竞品，降低平台商店与搜索端的撞名混淆。
-
 ## 快速开始
 
 ```bash
@@ -68,7 +66,7 @@ stack-tower/
 | `about.html` | 关于页：游戏介绍、技术栈、联系方式 | ✅ 域名 + 邮箱已填入（平台审核会查联系渠道） |
 | `index.html` 内 cookie 条 | GDPR 同意：选 Decline 则**不初始化任何广告 SDK** | ✅ 已生效，无需改动 |
 | `robots.txt` / `sitemap.xml` | 爬虫与收录 | ✅ 域名已替换为 `stacknova.cn` |
-| `ads.txt` | 广告授权（AdSense 后台生成后粘贴） | ⏳ 待 AdSense 批准后填入 |
+| `ads.txt` | 广告授权（AdSense 后台生成后粘贴） | ✅ 已按发布商 ID 填入（`google.com, pub-6465192362290250, DIRECT, f08c47fec0942fa0`，与后台核对） |
 
 ## 广告来源：三种环境，三个广告源
 
@@ -82,7 +80,7 @@ stack-tower/
 
 **平台规则**：CrazyGames 明确只允许自家 SDK 请求广告，所以平台环境看的不可能是 Google 广告；Google H5 Games Ads 只在自托管域名生效（需 AdSense 账户批准 + 单独申请 H5 资格）。
 
-**启用 Google 广告**（`index.html` 内已留好接入位）：① 域名过 AdSense 站点审核 → ② 申请 H5 Games Ads → ③ 取消 `pagead2.googlesyndication.com` script 的注释并填入 `ca-pub-XXXX`。代码检测到 `window.adBreak` 存在即自动切换到 GoogleH5AdProvider，复活/插屏全部改走 Google 需求。上传平台前删掉该 script。
+**Google 广告已接入**（发布商 ID `ca-pub-6465192362290250`）：`index.html` 内为官方两段式代码——① `adsbygoogle.js` script 标签（站点验证 + 自动广告，4 个页面均已挂载）② 内联 boilerplate 定义 `adBreak()`/`adConfig()`（H5 Games Ads 必需）。域名过 AdSense 审核后去申请 H5 Games Ads 资格；代码检测到 `window.adBreak` 存在即自动切换 GoogleH5AdProvider，复活/插屏全部走 Google 需求。**上传 CrazyGames 等平台前必须删除 index.html 内该段**（平台只允许自家 SDK）。
 
 **广告内容**：具体放什么广告由广告主竞价、平台/Google 按上下文匹配，开发者不控制单条内容（可在 AdSense/平台后台按类别屏蔽）。
 

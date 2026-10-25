@@ -88,14 +88,18 @@
   <!-- CrazySDK：平台环境自动生效，本地/自托管环境加载失败时静默降级为 DevAdProvider -->
   <script src="https://sdk.crazygames.com/crazygames-sdk-v3.js"></script>
 
-  <!-- Google H5 Games Ads（仅自托管域名启用；平台 iframe 内不要加载）
-       启用步骤：① 域名过 AdSense 站点审核 ② 申请 H5 Games Ads 资格
-       ③ 取消下方注释并填入你的 ca-pub-XXXX 发布商 ID。
-       加载后游戏自动走 GoogleH5AdProvider（激励复活/关卡间插屏均走 Google 广告需求）。
-       上传 CrazyGames 等平台前删除本段。 -->
-  <!--
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
-  -->
+  <!-- Google AdSense + H5 Games Ads（仅自托管域名 stacknova.cn 生效）
+       ① adsbygoogle.js：AdSense 站点验证 + 自动广告
+       ② 内联 boilerplate：定义 adBreak()/adConfig()——H5 Games Ads 官方要求的两段式代码，
+          缺了第②段 window.adBreak 不存在，游戏内广告（激励复活/插屏）不会工作
+       代码就位后游戏自动走 GoogleH5AdProvider（工厂检测 window.adBreak）
+       注意：上传 CrazyGames 等平台前必须删除本段（平台规定只允许自家 SDK 请求广告） -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6465192362290250"
+  crossorigin="anonymous"></script>
+  <script>
+    window.adsbygoogle = window.adsbygoogle || [];
+    var adBreak = adConfig = function (o) { adsbygoogle.push(o); };
+  </script>
 
   <!-- FAQ 结构化数据（搜索结果富摘要） -->
   <script type="application/ld+json">
