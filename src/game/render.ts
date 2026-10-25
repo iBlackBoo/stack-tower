@@ -78,7 +78,9 @@ export class Renderer {
     ctx.restore();
 
     // ---- UI 层（不随相机移动）----
-    this.drawHUD(engine, best);
+    // HUD 仅游戏进行中显示：准备/结束界面自带完整信息面板，
+    // 若 HUD 画在半透明遮罩下层会透上来形成叠影模糊
+    if (engine.status === 'playing') this.drawHUD(engine, best);
     this.drawPerfectNotice(engine);
 
     if (engine.status === 'ready') this.drawReady(engine);
@@ -165,19 +167,19 @@ export class Renderer {
     ctx.textAlign = 'center';
     ctx.fillStyle = '#ffffff';
     ctx.font = `800 ${Math.round(W * 0.11)}px ${FONT_STACK}`;
-    ctx.fillText(t('gameTitle'), W / 2, H * 0.4);
+    ctx.fillText(t('gameTitle'), W / 2, H * 0.38);
     ctx.fillStyle = 'rgba(255,255,255,0.75)';
-    ctx.font = `500 ${Math.round(W * 0.042)}px ${FONT_STACK}`;
-    ctx.fillText(t('hintDrop'), W / 2, H * 0.48);
+    ctx.font = `500 ${Math.round(W * 0.04)}px ${FONT_STACK}`;
+    ctx.fillText(t('hintDrop'), W / 2, H * 0.47);
     ctx.fillStyle = 'rgba(255,255,255,0.5)';
-    ctx.font = `400 ${Math.round(W * 0.034)}px ${FONT_STACK}`;
-    ctx.fillText(t('hintAlign'), W / 2, H * 0.53);
+    ctx.font = `400 ${Math.round(W * 0.032)}px ${FONT_STACK}`;
+    ctx.fillText(t('hintAlign'), W / 2, H * 0.535);
     // 呼吸提示
     const pulse = 0.6 + 0.4 * Math.sin(Date.now() / 400);
     ctx.globalAlpha = pulse;
     ctx.fillStyle = '#ffd166';
     ctx.font = `700 ${Math.round(W * 0.05)}px ${FONT_STACK}`;
-    ctx.fillText(t('tapToStart'), W / 2, H * 0.62);
+    ctx.fillText(t('tapToStart'), W / 2, H * 0.64);
     ctx.restore();
   }
 

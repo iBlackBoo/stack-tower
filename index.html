@@ -42,6 +42,18 @@
     #lang-pill:hover { border-color: rgba(255,255,255,0.5); background: rgba(34,38,54,0.95); }
     #lang-pill:active { transform: scale(0.96); }
 
+    /* 音效开关 pill：右上角固定 */
+    #sound-pill {
+      position: fixed; right: 14px; top: 14px; z-index: 40;
+      padding: 8px 16px; border-radius: 999px;
+      background: rgba(22,25,36,0.9); border: 1px solid rgba(255,255,255,0.25);
+      color: #ffffff; font-size: 13px; font-weight: 700; letter-spacing: 0.5px;
+      cursor: pointer; user-select: none; -webkit-user-select: none;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+    }
+    #sound-pill:hover { border-color: rgba(255,255,255,0.5); background: rgba(34,38,54,0.95); }
+    #sound-pill:active { transform: scale(0.96); }
+
     /* GDPR Cookie 同意条 */
     #cookie-bar {
       position: fixed; left: 50%; transform: translateX(-50%);
@@ -101,6 +113,9 @@
 
   <!-- 语言切换 pill（游戏内 Canvas 文本同步切换，无需刷新） -->
   <div id="lang-pill">中文</div>
+
+  <!-- 音效开关 pill（右上角；图标由脚本按静音状态刷新） -->
+  <div id="sound-pill">🔊</div>
 
   <!-- 合规入口 -->
   <footer class="site-info">
@@ -165,6 +180,19 @@
         if (typeof window.__snSetLang === 'function') window.__snSetLang(next);
         applyI18n();
       });
+
+      // ---- 音效开关（读 game.js 暴露的 SoundManager，静音偏好持久化）----
+      var soundPill = document.getElementById('sound-pill');
+      var renderSoundPill = function () {
+        if (window.__snSound) soundPill.textContent = window.__snSound.muted ? '🔇' : '🔊';
+      };
+      if (soundPill && window.__snSound) {
+        renderSoundPill();
+        soundPill.addEventListener('click', function () {
+          window.__snSound.toggleMute();
+          renderSoundPill();
+        });
+      }
 
       // ---- GDPR Cookie 同意（仅在有未决同意时创建横幅并绑定）----
       var CONSENT_KEY = 'sn-cookie-consent';

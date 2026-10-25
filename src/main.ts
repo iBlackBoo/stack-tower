@@ -9,6 +9,8 @@ declare global {
     __snAdsAllowed?: boolean;
     /** 页面语言切换调用：同步游戏内 i18n 状态，Canvas 文本下一帧即生效 */
     __snSetLang?: (lang: 'zh' | 'en') => void;
+    /** index.html 的音效 pill 调用：切换静音并刷新图标 */
+    __snSound?: import('./platform/audio').SoundManager;
   }
 }
 
@@ -18,6 +20,7 @@ import { Renderer } from './game/render';
 import { Input } from './game/input';
 import { createAdProvider } from './platform/ads';
 import { loadBest, saveBest } from './platform/storage';
+import { sound } from './platform/audio';
 
 const canvas = document.getElementById('game') as HTMLCanvasElement;
 const ctx = canvas.getContext('2d')!;
@@ -49,13 +52,15 @@ let best = loadBest();
 
 const engine = new Engine({
   onScore: (score) => {
+    if (score > 0) sound.land(); // 普通落层闷响（reset 传 0 不响；完美落层的叮声后叠加）
     if (score > best) {
       best = score;
       saveBest(best);
     }
   },
-  onPerfect: () => { /* 引擎内部已有 perfectNotice 渲染 */ },
+  onPerfect: (combo) => sound.perfect(combo),
   onGameOver: () => {
+    sound.gameOver();
     // 死亡即 gameplayStop（平台钩子）
     engine; // noop，钩子已在 gameOver 内调用
   },
@@ -74,8 +79,12 @@ const renderer = new Renderer(ctx);
 new Input(
   canvas,
   engine,
-  () => engine.tap(),
+  () => {
+    if (engine.status === 'ready') sound.start(); // 开局上行音
+    engine.tap();
+  },
   (id) => {
+    sound.click();
     if (id === 'revive') {
       void (async () => {
         const result = await ads?.rewarded();
@@ -120,3 +129,6 @@ requestAnimationFrame(frame);
 
 // 语言切换钩子：页面 pill 按钮点击时调用，Canvas 文本实时切换无需刷新
 window.__snSetLang = setLang;
+
+// 音效开关钩子：页面 pill 读取静音状态、切换后刷新图标
+window.__snSound = sound;

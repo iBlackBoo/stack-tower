@@ -33,7 +33,8 @@ stack-tower/
 │   │   ├── input.ts      # Pointer 事件（鼠标/触摸/笔统一）+ 键盘
 │   │   └── types.ts      # 共享类型
 │   └── platform/
-│       ├── ads.ts        # 广告适配层：AdProvider 接口 + Dev/CrazyGames 双实现
+│       ├── ads.ts        # 广告适配层：AdProvider 接口 + Dev/CrazyGames/GoogleH5 三实现
+│       ├── audio.ts      # 音效：WebAudio 程序化合成（落层/完美/结束/点击/开局）
 │       └── storage.ts    # 最高分存储（localStorage + 内存降级）
 └── dist/                 # 构建产物（gitignore）
 ```
@@ -43,6 +44,7 @@ stack-tower/
 - **平台无感**：游戏核心只依赖 `AdProvider` 接口。检测到 `window.CrazyGames` 走平台 SDK，否则走 Dev 空实现——同一份代码跑平台 iframe / 自托管 / 本地。
 - **中英双语（i18n）**：`src/i18n.ts` 为单一语言源——Canvas 内文本（HUD/按钮/提示）与 DOM（footer/cookie 条/合规三页）共用。语言持久化在 `localStorage['sn-lang']`，默认按 `navigator.language` 检测。切换入口：游戏页底栏「中文/EN」、各合规页右上角按钮。Canvas 文本实时切换无需刷新；DOM 部分由各页脚本即时重绘。
 - **GDPR 同意门控**：用户在 cookie 条选 Decline → `window.__snAdsAllowed = false` → 广告 SDK 完全不初始化。
+- **音效（WebAudio）**：`src/platform/audio.ts` 程序化合成，零音频资源文件——落层闷响+切削、完美双音叮（音高随连击上升）、结束三连下行音、开局上行音、按钮 tick。AudioContext 懒创建（首次用户手势时初始化，符合自动播放策略）；右上角 🔊/🔇 pill 开关，偏好持久化 `localStorage['sn-muted']`。
 - **DPR 缩放**：画布按 devicePixelRatio 渲染，高清屏不模糊。
 - **dt 夹紧**：主循环 dt 上限 50ms，切后台回来不会跳变。
 - **无后端**：最高分走 localStorage；死亡/复活/广告全部本地闭环。
@@ -81,6 +83,6 @@ stack-tower/
 
 **广告内容**：具体放什么广告由广告主竞价、平台/Google 按上下文匹配，开发者不控制单条内容（可在 AdSense/平台后台按类别屏蔽）。
 
-- 无音效（WebAudio 后续补）
+- 音效已上线（WebAudio 合成）；后续可按平台要求补横幅音/振动反馈
 - 无横幅广告 API 接线（CrazySDK v3 banner 接口后续接入）
 - 复活无限次（商业上可保留，后续按数据加频控）
