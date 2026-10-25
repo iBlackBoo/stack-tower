@@ -39,7 +39,7 @@ const dict = {
     // Ready 界面
     gameTitle: 'STACK NOVA',
     tapToStart: 'TAP TO START',
-    hintDrop: 'Tap / click / Space to drop the block',
+    hintDrop: 'Tap, click, or press Space to drop a block',
     hintAlign: 'The more precise, the steadier the tower',
     // Game Over 界面
     gameOver: 'GAME OVER',
@@ -64,7 +64,7 @@ const dict = {
     combo: '连击',
     gameTitle: 'STACK NOVA',
     tapToStart: '点击开始',
-    hintDrop: '点击 / 触摸 / 空格 让方块落下',
+    hintDrop: '点击、触摸或空格，让方块落下',
     hintAlign: '对齐越精准，塔越稳',
     gameOver: '游戏结束',
     scoreLayers: '本局 {n} 层',

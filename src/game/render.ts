@@ -41,13 +41,16 @@ export class Renderer {
     ctx.restore();
 
     // ---- 塔身（应用相机平移）----
+    // 准备页不画塔身：首页只展示滑动预览块，点击开始后才出现基座与真实方块
     ctx.save();
     ctx.translate(0, camY);
 
-    for (const b of engine.tower) {
-      const screenY = b.y;
-      if (screenY > H + 60 || screenY < -60) continue;
-      this.drawBlock(b.x, screenY, b.w, b.h, b.hue, b.flash);
+    if (engine.status !== 'ready') {
+      for (const b of engine.tower) {
+        const screenY = b.y;
+        if (screenY > H + 60 || screenY < -60) continue;
+        this.drawBlock(b.x, screenY, b.w, b.h, b.hue, b.flash);
+      }
     }
 
     // 待落块
@@ -167,22 +170,22 @@ export class Renderer {
     ctx.textAlign = 'center';
     // 标题
     ctx.fillStyle = '#ffffff';
-    ctx.font = `800 ${Math.round(W * 0.11)}px ${FONT_STACK}`;
-    ctx.fillText(t('gameTitle'), W / 2, H * 0.3);
-    // 操作提示组（两行收紧，作为一组信息）
+    ctx.font = `800 ${Math.round(W * 0.085)}px ${FONT_STACK}`;
+    ctx.fillText(t('gameTitle'), W / 2, H * 0.26);
+    // 操作提示组
     ctx.fillStyle = 'rgba(255,255,255,0.75)';
-    ctx.font = `500 ${Math.round(W * 0.04)}px ${FONT_STACK}`;
-    ctx.fillText(t('hintDrop'), W / 2, H * 0.4);
+    ctx.font = `500 ${Math.round(W * 0.038)}px ${FONT_STACK}`;
+    ctx.fillText(t('hintDrop'), W / 2, H * 0.35);
     ctx.fillStyle = 'rgba(255,255,255,0.5)';
-    ctx.font = `400 ${Math.round(W * 0.032)}px ${FONT_STACK}`;
-    ctx.fillText(t('hintAlign'), W / 2, H * 0.45);
+    ctx.font = `400 ${Math.round(W * 0.03)}px ${FONT_STACK}`;
+    ctx.fillText(t('hintAlign'), W / 2, H * 0.395);
     // 开始按钮：pill 样式 + 呼吸效果，与结束界面按钮语言一致
     const pulse = 0.6 + 0.4 * Math.sin(Date.now() / 400);
     ctx.globalAlpha = pulse;
-    const btnW = Math.min(W * 0.52, 300);
-    const btnH = Math.max(44, Math.round(W * 0.062));
+    const btnW = Math.min(W * 0.5, 280);
+    const btnH = Math.max(42, Math.round(W * 0.058));
     const btnX = W / 2 - btnW / 2;
-    const btnY = H * 0.58 - btnH / 2;
+    const btnY = H * 0.52 - btnH / 2;
     ctx.fillStyle = 'rgba(255,209,102,0.14)';
     ctx.beginPath();
     ctx.roundRect(btnX, btnY, btnW, btnH, btnH / 2);
@@ -191,10 +194,28 @@ export class Renderer {
     ctx.lineWidth = 1.5;
     ctx.stroke();
     ctx.fillStyle = '#ffd166';
-    ctx.font = `700 ${Math.round(btnH * 0.42)}px ${FONT_STACK}`;
+    ctx.font = `700 ${Math.round(btnH * 0.44)}px ${FONT_STACK}`;
     ctx.textBaseline = 'middle';
     ctx.fillText(t('tapToStart'), W / 2, btnY + btnH / 2);
     ctx.textBaseline = 'alphabetic';
+    ctx.globalAlpha = 1;
+
+    // 机制预览：准备页仅展示一个往复滑动的方块（宽度同真实首块），
+    // 不画基座——点击开始后才展示完整游戏内画面
+    const base = engine.tower[0];
+    if (base) {
+      const gW = base.w;
+      const gH = base.h;
+      const phase = (Date.now() % 2400) / 2400;
+      const tri = phase < 0.5 ? phase * 2 : 2 - phase * 2; // 三角波 0→1→0
+      const gx = tri * (W - gW);
+      const gy = H * 0.78;
+      // 半透明预览块：与真实方块同色系同宽度，读作"待落下的那块"
+      ctx.save();
+      ctx.globalAlpha = 0.5;
+      this.drawBlockRect(gx, gy, gW, gH, base.hue, 0);
+      ctx.restore();
+    }
     ctx.restore();
   }
 
