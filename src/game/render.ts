@@ -178,7 +178,7 @@ export class Renderer {
     ctx.fillText(t('hintDrop'), W / 2, H * 0.35);
     ctx.fillStyle = 'rgba(255,255,255,0.5)';
     ctx.font = `400 ${Math.round(W * 0.03)}px ${FONT_STACK}`;
-    ctx.fillText(t('hintAlign'), W / 2, H * 0.395);
+    ctx.fillText(t('hintAlign'), W / 2, H * 0.42);
     // 开始按钮：pill 样式 + 呼吸效果，与结束界面按钮语言一致
     const pulse = 0.6 + 0.4 * Math.sin(Date.now() / 400);
     ctx.globalAlpha = pulse;
