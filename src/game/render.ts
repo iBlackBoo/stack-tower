@@ -184,7 +184,7 @@ export class Renderer {
     ctx.globalAlpha = pulse;
     ctx.fillStyle = '#ffd166';
     ctx.font = `700 ${Math.round(W * 0.048)}px ${FONT_STACK}`;
-    ctx.fillText(t('tapToStart'), W / 2, H * 0.52);
+    ctx.fillText(t('tapToStart'), W / 2, H * 0.57);
     ctx.globalAlpha = 1;
 
     // 机制预览：准备页仅展示一个往复滑动的方块（宽度同真实首块），
