@@ -165,21 +165,36 @@ export class Renderer {
     ctx.fillStyle = 'rgba(10,12,18,0.62)';
     ctx.fillRect(0, 0, W, H);
     ctx.textAlign = 'center';
+    // 标题
     ctx.fillStyle = '#ffffff';
     ctx.font = `800 ${Math.round(W * 0.11)}px ${FONT_STACK}`;
-    ctx.fillText(t('gameTitle'), W / 2, H * 0.38);
+    ctx.fillText(t('gameTitle'), W / 2, H * 0.3);
+    // 操作提示组（两行收紧，作为一组信息）
     ctx.fillStyle = 'rgba(255,255,255,0.75)';
     ctx.font = `500 ${Math.round(W * 0.04)}px ${FONT_STACK}`;
-    ctx.fillText(t('hintDrop'), W / 2, H * 0.47);
+    ctx.fillText(t('hintDrop'), W / 2, H * 0.4);
     ctx.fillStyle = 'rgba(255,255,255,0.5)';
     ctx.font = `400 ${Math.round(W * 0.032)}px ${FONT_STACK}`;
-    ctx.fillText(t('hintAlign'), W / 2, H * 0.535);
-    // 呼吸提示
+    ctx.fillText(t('hintAlign'), W / 2, H * 0.45);
+    // 开始按钮：pill 样式 + 呼吸效果，与结束界面按钮语言一致
     const pulse = 0.6 + 0.4 * Math.sin(Date.now() / 400);
     ctx.globalAlpha = pulse;
+    const btnW = Math.min(W * 0.52, 300);
+    const btnH = Math.max(44, Math.round(W * 0.062));
+    const btnX = W / 2 - btnW / 2;
+    const btnY = H * 0.58 - btnH / 2;
+    ctx.fillStyle = 'rgba(255,209,102,0.14)';
+    ctx.beginPath();
+    ctx.roundRect(btnX, btnY, btnW, btnH, btnH / 2);
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(255,209,102,0.55)';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
     ctx.fillStyle = '#ffd166';
-    ctx.font = `700 ${Math.round(W * 0.05)}px ${FONT_STACK}`;
-    ctx.fillText(t('tapToStart'), W / 2, H * 0.64);
+    ctx.font = `700 ${Math.round(btnH * 0.42)}px ${FONT_STACK}`;
+    ctx.textBaseline = 'middle';
+    ctx.fillText(t('tapToStart'), W / 2, btnY + btnH / 2);
+    ctx.textBaseline = 'alphabetic';
     ctx.restore();
   }
 
