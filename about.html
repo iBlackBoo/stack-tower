@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About - StackNova</title>
+  <meta name="description" content="About StackNova, a free one-tap online stacking game built with HTML5 and Canvas.">
+  <link rel="canonical" href="https://stack.blackgames.cn/about.html">
+  <style>
+    :root { color-scheme: dark; }
+    body {
+      margin: 0; padding: 40px 20px;
+      background: #14161f; color: rgba(255,255,255,0.82);
+      font-family: -apple-system, "PingFang SC", "Segoe UI", Roboto, sans-serif;
+      font-size: 15px; line-height: 1.75;
+    }
+    .doc { max-width: 720px; margin: 0 auto; position: relative; }
+    h1 { font-size: 28px; margin: 0 0 6px; color: #fff; }
+    .updated { color: rgba(255,255,255,0.45); font-size: 13px; margin-bottom: 32px; }
+    h2 { font-size: 18px; margin: 36px 0 12px; color: #ffd166; }
+    p, li { margin: 0 0 12px; }
+    ul { padding-left: 22px; }
+    a { color: #f4a261; }
+    .back { display: inline-block; margin-bottom: 28px; color: rgba(255,255,255,0.6); text-decoration: none; font-size: 14px; }
+    .back:hover { color: #fff; }
+    .lang-switch { position: absolute; top: 0; right: 0; }
+    .lang-switch a {
+      display: inline-block; padding: 6px 14px; border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.7);
+      font-size: 13px; font-weight: 600; text-decoration: none; cursor: pointer;
+    }
+    .lang-switch a:hover { color: #fff; border-color: rgba(255,255,255,0.45); }
+    .card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 18px 20px; margin: 16px 0; }
+    .note { color: rgba(255,255,255,0.45); font-size: 13px; }
+    body[data-lang="en"] [data-lang="zh"] { display: none; }
+    body[data-lang="zh"] [data-lang="en"] { display: none; }
+  </style>
+</head>
+<body data-lang="en">
+  <div class="doc">
+    <div class="lang-switch"><a id="lang-toggle">中文</a></div>
+    <a class="back" href="./index.html">&larr; Back to game / 返回游戏</a>
+
+    <!-- ============ English ============ -->
+    <div class="lang-block" data-lang="en">
+      <h1>About StackNova</h1>
+      <div class="updated">A free one-tap online stacking game</div>
+
+      <div class="card">
+        <p style="margin:0"><strong style="color:#fff">StackNova</strong> is a free browser game about timing and precision. Blocks slide across the screen — tap to drop one, keep the overlap, and see how high your tower can grow. Land a perfect alignment and your combo builds; miss the tower entirely and the run ends.</p>
+      </div>
+
+      <h2>The game</h2>
+      <ul>
+        <li><strong>One-tap controls</strong> — click, touch, or Space. No tutorials needed.</li>
+        <li><strong>Perfect-drop combos</strong> — precise alignment preserves width; three perfects in a row reward a wider block.</li>
+        <li><strong>Runs anywhere</strong> — desktop and mobile browsers, no download, no account.</li>
+        <li><strong>Local scores</strong> — your best is saved on your own device only.</li>
+        <li><strong>English / 中文</strong> — switch language anytime from the game page footer.</li>
+      </ul>
+
+      <h2>Built with</h2>
+      <p>StackNova is built with TypeScript and the HTML5 Canvas API, with no game engine and no backend server. All gameplay happens locally in your browser.</p>
+
+      <h2>Who makes this</h2>
+      <p>StackNova is an independent game project created by a solo developer. It is kept free by advertising, in line with our <a href="./privacy-policy.html">Privacy Policy</a>.</p>
+
+      <h2>Where to play</h2>
+      <p>The game is distributed through web game platforms and this website. Platform availability may change over time.</p>
+
+      <h2>Contact</h2>
+      <p>Questions, feedback, or bug reports: <a href="mailto:hello@blackgames.cn">hello@blackgames.cn</a></p>
+    </div>
+
+    <!-- ============ 中文 ============ -->
+    <div class="lang-block" data-lang="zh">
+      <h1>关于 StackNova</h1>
+      <div class="updated">一款免费的单键在线堆叠游戏</div>
+
+      <div class="card">
+        <p style="margin:0"><strong style="color:#fff">StackNova</strong> 是一款关于时机与精度的免费浏览器游戏。方块在屏幕上方来回滑动——点击让它落下，保住重叠部分，看看你的塔能堆多高。精准对齐可积累连击，完全错开则本局结束。</p>
+      </div>
+
+      <h2>游戏特色</h2>
+      <ul>
+        <li><strong>单键操作</strong>——点击、触摸或空格，无需教程。</li>
+        <li><strong>完美落层连击</strong>——精准对齐保留完整宽度，三连完美奖励更宽方块。</li>
+        <li><strong>随处可玩</strong>——桌面与手机浏览器，无需下载、无需账户。</li>
+        <li><strong>本地存档</strong>——最高分只保存在你自己的设备上。</li>
+        <li><strong>中英双语</strong>——随时在游戏页底栏切换语言。</li>
+      </ul>
+
+      <h2>技术栈</h2>
+      <p>StackNova 使用 TypeScript 与 HTML5 Canvas API 构建，不依赖任何游戏引擎，也没有后端服务器。全部游戏过程都在你的浏览器本地完成。</p>
+
+      <h2>关于开发者</h2>
+      <p>StackNova 是由独立开发者个人创作的游戏项目，通过广告收入维持免费运营，详见<a href="./privacy-policy.html">隐私政策</a>。</p>
+
+      <h2>游玩渠道</h2>
+      <p>本游戏通过网页游戏平台及本网站发行，各平台的上线情况可能随时间变化。</p>
+
+      <h2>联系方式</h2>
+      <p>疑问、反馈或报错：<a href="mailto:hello@blackgames.cn">hello@blackgames.cn</a></p>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var KEY = 'sn-lang';
+      function getLang() {
+        try {
+          var s = localStorage.getItem(KEY);
+          if (s === 'zh' || s === 'en') return s;
+        } catch (e) { /* noop */ }
+        return (navigator.language || '').toLowerCase().indexOf('zh') === 0 ? 'zh' : 'en';
+      }
+      function apply() {
+        var lang = getLang();
+        document.body.setAttribute('data-lang', lang);
+        document.getElementById('lang-toggle').textContent = lang === 'zh' ? 'EN' : '中文';
+        document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+      }
+      document.getElementById('lang-toggle').addEventListener('click', function () {
+        var next = getLang() === 'zh' ? 'en' : 'zh';
+        try { localStorage.setItem(KEY, next); } catch (e) { /* noop */ }
+        apply();
+      });
+      apply();
+    })();
+  </script>
+</body>
+</html>

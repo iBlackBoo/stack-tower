@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>StackNova - Free Online Stacking Game | Play in Browser</title>
+  <meta name="description" content="StackNova is a free online stacking game. Tap to drop moving blocks, build the tallest tower, and chase perfect combos. Play instantly in your browser, no download.">
+  <meta name="keywords" content="stacking game, stack game, tower game, free online game, html5 game, browser game">
+  <meta property="og:title" content="StackNova - Free Online Stacking Game">
+  <meta property="og:description" content="Tap to drop, stack perfectly, build the tallest tower. Play free in your browser.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://stack.blackgames.cn/">
+  <style>
+    html, body {
+      margin: 0; padding: 0; width: 100%; height: 100%;
+      background: #14161f; overflow: hidden;
+      touch-action: none; overscroll-behavior: none;
+      font-family: -apple-system, "PingFang SC", "Segoe UI", Roboto, sans-serif;
+    }
+    #game { display: block; width: 100vw; height: 100vh; }
+
+    /* 合规入口（提亮保证可见） */
+    .site-info {
+      position: fixed; left: 0; right: 0; bottom: 0;
+      padding: 7px 12px; text-align: center;
+      font-size: 12px; line-height: 1.6; color: rgba(255,255,255,0.55);
+      background: linear-gradient(transparent, rgba(10,12,18,0.55));
+      pointer-events: none; z-index: 5;
+    }
+    .site-info a { color: rgba(255,255,255,0.75); pointer-events: auto; text-decoration: none; margin: 0 6px; cursor: pointer; }
+    .site-info a:hover { color: #ffffff; }
+
+    /* 语言切换 pill 按钮：右下角固定，醒目且不干扰游戏区 */
+    #lang-pill {
+      position: fixed; right: 14px; bottom: 34px; z-index: 40;
+      padding: 8px 16px; border-radius: 999px;
+      background: rgba(22,25,36,0.9); border: 1px solid rgba(255,255,255,0.25);
+      color: #ffffff; font-size: 13px; font-weight: 700; letter-spacing: 0.5px;
+      cursor: pointer; user-select: none; -webkit-user-select: none;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+    }
+    #lang-pill:hover { border-color: rgba(255,255,255,0.5); background: rgba(34,38,54,0.95); }
+    #lang-pill:active { transform: scale(0.96); }
+
+    /* GDPR Cookie 同意条 */
+    #cookie-bar {
+      position: fixed; left: 50%; transform: translateX(-50%);
+      bottom: 14px; max-width: 560px; width: calc(100% - 28px);
+      background: rgba(22,25,36,0.96); border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 12px; padding: 14px 16px; z-index: 50;
+      color: rgba(255,255,255,0.85); font-size: 13px; line-height: 1.6;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.45);
+    }
+    #cookie-bar p { margin: 0 0 10px; }
+    #cookie-bar .btns { display: flex; gap: 10px; justify-content: flex-end; }
+    #cookie-bar button {
+      border: none; border-radius: 8px; padding: 8px 18px;
+      font-size: 13px; font-weight: 600; cursor: pointer;
+    }
+    #cookie-accept { background: #f4a261; color: #1a1208; }
+    #cookie-decline { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.8); }
+    #cookie-bar[hidden] { display: none; }
+    #cookie-bar a { color: #f4a261; }
+
+    /* SEO 文本块：crawler 可读，视觉上折叠不干扰游戏 */
+    .seo-text {
+      position: absolute; width: 1px; height: 1px;
+      padding: 0; margin: -1px; overflow: hidden;
+      clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+    }
+  </style>
+  <!-- CrazySDK：平台环境自动生效，本地/自托管环境加载失败时静默降级为 DevAdProvider -->
+  <script src="https://sdk.crazygames.com/crazygames-sdk-v3.js"></script>
+
+  <!-- Google H5 Games Ads（仅自托管域名启用；平台 iframe 内不要加载）
+       启用步骤：① 域名过 AdSense 站点审核 ② 申请 H5 Games Ads 资格
+       ③ 取消下方注释并填入你的 ca-pub-XXXX 发布商 ID。
+       加载后游戏自动走 GoogleH5AdProvider（激励复活/关卡间插屏均走 Google 广告需求）。
+       上传 CrazyGames 等平台前删除本段。 -->
+  <!--
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+  -->
+
+  <!-- FAQ 结构化数据（搜索结果富摘要） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoGame",
+    "name": "StackNova",
+    "description": "A free online stacking game. Tap to drop moving blocks and build the tallest tower.",
+    "genre": "Puzzle",
+    "gamePlatform": "Web Browser",
+    "applicationCategory": "Game",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+</head>
+<body>
+  <canvas id="game"></canvas>
+
+  <!-- 语言切换 pill（游戏内 Canvas 文本同步切换，无需刷新） -->
+  <div id="lang-pill">中文</div>
+
+  <!-- 合规入口 -->
+  <footer class="site-info">
+    <a href="./privacy-policy.html" data-i18n="footerPrivacy">Privacy Policy</a> ·
+    <a href="./terms-of-service.html" data-i18n="footerTerms">Terms of Service</a> ·
+    <a href="./about.html" data-i18n="footerAbout">About</a>
+  </footer>
+
+  <!-- 搜索引擎可读的原创内容（面向海外英文流量，保持英文） -->
+  <div class="seo-text">
+    <h1>StackNova - Free Online Stacking Game</h1>
+    <h2>How to play</h2>
+    <p>Blocks slide back and forth across the top of the screen. Tap, click, or press Space to drop each block onto the tower below. The overlapping part of your block becomes the new top layer, and the rest falls away. Stack as high as you can.</p>
+    <h2>Controls</h2>
+    <p>Mouse click, touch, or the Space key drops the moving block. Perfect alignment within a few pixels keeps the full width and builds a combo streak. Three perfect drops in a row rewards you with a slightly wider block.</p>
+    <h2>About this game</h2>
+    <p>StackNova is a one-tap arcade stacking game built with HTML5 and Canvas. It runs entirely in your browser with no download, no account, and no installation. Your best score is stored locally on your own device.</p>
+  </div>
+
+  <script src="./dist/game.js"></script>
+
+  <!-- DOM 层国际化 + GDPR 同意 + 语言切换 -->
+  <script>
+    (function () {
+      var LANG_KEY = 'sn-lang';
+      var I18N = {
+        en: {
+          footerPrivacy: 'Privacy Policy', footerTerms: 'Terms of Service', footerAbout: 'About',
+          langSwitch: '中文',
+          cookieText: 'We use cookies and similar technologies (including third-party advertising partners such as Google) to keep the game free. See our <a href="./privacy-policy.html">Privacy Policy</a>.',
+          cookieAccept: 'Accept', cookieDecline: 'Decline',
+        },
+        zh: {
+          footerPrivacy: '隐私政策', footerTerms: '服务条款', footerAbout: '关于',
+          langSwitch: 'EN',
+          cookieText: '我们使用 Cookie 及类似技术（包括 Google 等第三方广告合作伙伴）以保证游戏免费畅玩。详见<a href="./privacy-policy.html">隐私政策</a>。',
+          cookieAccept: '同意', cookieDecline: '拒绝',
+        },
+      };
+      function getLang() {
+        try {
+          var s = localStorage.getItem(LANG_KEY);
+          if (s === 'zh' || s === 'en') return s;
+        } catch (e) { /* noop */ }
+        return (navigator.language || '').toLowerCase().indexOf('zh') === 0 ? 'zh' : 'en';
+      }
+      function applyI18n() {
+        var lang = getLang();
+        var d = I18N[lang];
+        document.querySelectorAll('[data-i18n]').forEach(function (el) {
+          var key = el.getAttribute('data-i18n');
+          if (key === 'cookieText') el.innerHTML = d.cookieText;
+          else if (d[key]) el.textContent = d[key];
+        });
+        document.getElementById('lang-pill').textContent = d.langSwitch;
+        document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+      }
+      document.getElementById('lang-pill').addEventListener('click', function () {
+        var next = getLang() === 'zh' ? 'en' : 'zh';
+        try { localStorage.setItem(LANG_KEY, next); } catch (e) { /* noop */ }
+        // 通知游戏内 i18n 实时切换 Canvas 文本（无需刷新页面）
+        if (typeof window.__snSetLang === 'function') window.__snSetLang(next);
+        applyI18n();
+      });
+
+      // ---- GDPR Cookie 同意（仅在有未决同意时创建横幅并绑定）----
+      var CONSENT_KEY = 'sn-cookie-consent';
+      var consent = null;
+      try { consent = localStorage.getItem(CONSENT_KEY); } catch (e) { /* 无痕模式 */ }
+      if (!consent) {
+        var bar = document.createElement('div');
+        bar.id = 'cookie-bar';
+        bar.innerHTML =
+          '<p data-i18n="cookieText"></p>' +
+          '<div class="btns">' +
+          '<button id="cookie-decline" data-i18n="cookieDecline"></button>' +
+          '<button id="cookie-accept" data-i18n="cookieAccept"></button>' +
+          '</div>';
+        document.body.appendChild(bar);
+        document.getElementById('cookie-accept').addEventListener('click', function () {
+          try { localStorage.setItem(CONSENT_KEY, 'accepted'); } catch (e) { /* noop */ }
+          bar.hidden = true;
+        });
+        document.getElementById('cookie-decline').addEventListener('click', function () {
+          try { localStorage.setItem(CONSENT_KEY, 'declined'); } catch (e) { /* noop */ }
+          bar.hidden = true;
+        });
+      }
+      // 拒绝同意时阻止广告初始化（GDPR：无同意不加载广告 SDK）
+      window.__snAdsAllowed = consent !== 'declined';
+
+      applyI18n();
+    })();
+  </script>
+</body>
+</html>

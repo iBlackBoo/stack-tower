@@ -1,0 +1,4 @@
+# ads.txt — 广告授权文件
+# 部署到真实域名并接入 Google AdSense / H5 Games Ads 后，
+# 将 AdSense 后台提供的完整记录粘贴到此处（格式示例）：
+# google.com, pub-0000000000000000, DIRECT, f08c47fec0942fa0
