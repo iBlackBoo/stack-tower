@@ -179,25 +179,12 @@ export class Renderer {
     ctx.fillStyle = 'rgba(255,255,255,0.5)';
     ctx.font = `400 ${Math.round(W * 0.03)}px ${FONT_STACK}`;
     ctx.fillText(t('hintAlign'), W / 2, H * 0.42);
-    // 开始按钮：pill 样式 + 呼吸效果，与结束界面按钮语言一致
+    // 开始提示：纯文字 + 呼吸效果（无背景框）
     const pulse = 0.6 + 0.4 * Math.sin(Date.now() / 400);
     ctx.globalAlpha = pulse;
-    const btnW = Math.min(W * 0.5, 280);
-    const btnH = Math.max(42, Math.round(W * 0.058));
-    const btnX = W / 2 - btnW / 2;
-    const btnY = H * 0.52 - btnH / 2;
-    ctx.fillStyle = 'rgba(255,209,102,0.14)';
-    ctx.beginPath();
-    ctx.roundRect(btnX, btnY, btnW, btnH, btnH / 2);
-    ctx.fill();
-    ctx.strokeStyle = 'rgba(255,209,102,0.55)';
-    ctx.lineWidth = 1.5;
-    ctx.stroke();
     ctx.fillStyle = '#ffd166';
-    ctx.font = `700 ${Math.round(btnH * 0.44)}px ${FONT_STACK}`;
-    ctx.textBaseline = 'middle';
-    ctx.fillText(t('tapToStart'), W / 2, btnY + btnH / 2);
-    ctx.textBaseline = 'alphabetic';
+    ctx.font = `700 ${Math.round(W * 0.048)}px ${FONT_STACK}`;
+    ctx.fillText(t('tapToStart'), W / 2, H * 0.52);
     ctx.globalAlpha = 1;
 
     // 机制预览：准备页仅展示一个往复滑动的方块（宽度同真实首块），
