@@ -47,9 +47,12 @@ export class Renderer {
 
     if (engine.status !== 'ready') {
       for (const b of engine.tower) {
-        const screenY = b.y;
+        // 剔除判断必须用加过相机平移的屏幕坐标：
+        // 塔长高后 camY 增大，塔顶方块的 b.y 变为负值，
+        // 若按未变换坐标剔除，会把屏幕上实际可见的塔块误裁（塔身凭空消失）
+        const screenY = b.y + camY;
         if (screenY > H + 60 || screenY < -60) continue;
-        this.drawBlock(b.x, screenY, b.w, b.h, b.hue, b.flash);
+        this.drawBlock(b.x, b.y, b.w, b.h, b.hue, b.flash); // 绘制仍在 translate 内，用未变换坐标
       }
     }
 

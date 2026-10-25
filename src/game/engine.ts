@@ -137,7 +137,9 @@ export class Engine {
       d.y += d.vy * dt;
       d.rot += d.vr * dt;
     }
-    this.debris = this.debris.filter((d) => d.y < this.H + 200);
+    // 与塔身剔除同一类问题：碎块存活判断也要加相机平移，
+    // 否则高塔（camY 大）时碎块在屏幕外滞留到很晚才被回收
+    this.debris = this.debris.filter((d) => d.y + this.cameraY < this.H + 200);
 
     // 相机平滑跟随
     const top = this.tower[this.tower.length - 1];
