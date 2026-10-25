@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemap.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://stack.blackgames.cn/</loc>
+    <loc>https://stacknova.cn/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://stack.blackgames.cn/privacy-policy.html</loc>
+    <loc>https://stacknova.cn/privacy-policy.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://stack.blackgames.cn/terms-of-service.html</loc>
+    <loc>https://stacknova.cn/terms-of-service.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://stack.blackgames.cn/about.html</loc>
+    <loc>https://stacknova.cn/about.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>

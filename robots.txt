@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /dist/
 
-Sitemap: https://stack.blackgames.cn/sitemap.xml
+Sitemap: https://stacknova.cn/sitemap.xml

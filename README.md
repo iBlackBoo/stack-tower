@@ -2,6 +2,8 @@
 
 平台发行方向的第一个游戏。原生 TypeScript + Canvas 2D，零游戏引擎依赖。
 
+> 起名说明：StackNova = stack（品类识别）+ Nova（新星，越堆越高）。避开 Stack / Stack Tower / Tower Stack 等大量同名竞品，降低平台商店与搜索端的撞名混淆。
+
 ## 快速开始
 
 ```bash
@@ -61,11 +63,11 @@ stack-tower/
 
 | 文件 | 作用 | 状态 |
 |------|------|------|
-| `privacy-policy.html` | 隐私政策：本地存储披露、第三方广告 cookie、GDPR/CCPA 权利、儿童条款 | ✅ 域名 `stack.blackgames.cn` + 邮箱 `hello@blackgames.cn` 已填入 |
+| `privacy-policy.html` | 隐私政策：本地存储披露、第三方广告 cookie、GDPR/CCPA 权利、儿童条款 | ✅ 域名 `stacknova.cn` + 邮箱 `hello@blackgames.cn` 已填入 |
 | `terms-of-service.html` | 服务条款：许可、广告、免责、责任限制 | ✅ 域名 + 邮箱已填入 |
 | `about.html` | 关于页：游戏介绍、技术栈、联系方式 | ✅ 域名 + 邮箱已填入（平台审核会查联系渠道） |
 | `index.html` 内 cookie 条 | GDPR 同意：选 Decline 则**不初始化任何广告 SDK** | ✅ 已生效，无需改动 |
-| `robots.txt` / `sitemap.xml` | 爬虫与收录 | ✅ 域名已替换为 `stack.blackgames.cn` |
+| `robots.txt` / `sitemap.xml` | 爬虫与收录 | ✅ 域名已替换为 `stacknova.cn` |
 | `ads.txt` | 广告授权（AdSense 后台生成后粘贴） | ⏳ 待 AdSense 批准后填入 |
 
 ## 广告来源：三种环境，三个广告源
