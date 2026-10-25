@@ -2,8 +2,6 @@
 
 平台发行方向的第一个游戏。原生 TypeScript + Canvas 2D，零游戏引擎依赖。
 
-> 起名说明：StackNova = stack（品类识别）+ Nova（新星，越堆越高）。避开 Stack / Stack Tower / Tower Stack 等大量同名竞品，降低平台商店与搜索端的撞名混淆。
-
 ## 快速开始
 
 ```bash
